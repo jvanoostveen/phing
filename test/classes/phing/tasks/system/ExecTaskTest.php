@@ -20,6 +20,7 @@
 use Phing\Exception\BuildException;
 use Phing\Io\File;
 use Phing\Project;
+use Phing\Target;
 use Phing\Task;
 use Phing\Test\AbstractBuildFileTest;
 use Phing\UnknownElement;
@@ -47,7 +48,12 @@ class ExecTaskTest extends AbstractBuildFileTest
         $this->windows = strtoupper(substr(PHP_OS, 0, 3)) == 'WIN';
     }
 
-    protected function getTargetByName($name)
+    /**
+     * @param string $name
+     * @return Target
+     * @throws Exception
+     */
+    private function getTargetByName($name)
     {
         foreach ($this->project->getTargets() as $target) {
             if ($target->getName() == $name) {
@@ -57,7 +63,14 @@ class ExecTaskTest extends AbstractBuildFileTest
         throw new Exception(sprintf('Target "%s" not found', $name));
     }
 
-    protected function getTaskFromTarget($target, $taskname, $pos = 0)
+    /**
+     * @param Target $target
+     * @param string $taskname
+     * @param int $pos
+     * @return mixed
+     * @throws Exception
+     */
+    private function getTaskFromTarget(Target $target, $taskname, $pos = 0)
     {
         $rchildren = new ReflectionProperty(get_class($target), 'children');
         $rchildren->setAccessible(true);
@@ -72,16 +85,27 @@ class ExecTaskTest extends AbstractBuildFileTest
         );
     }
 
-    protected function getConfiguredTask($target, $task, $pos = 0)
+    /**
+     * @param string $targetName
+     * @param string $task
+     * @return mixed
+     * @throws Exception
+     */
+    private function getConfiguredTask($targetName, $task)
     {
-        $target = $this->getTargetByName($target);
+        $target = $this->getTargetByName($targetName);
         $task = $this->getTaskFromTarget($target, $task);
         $task->maybeConfigure();
 
         return $task;
     }
 
-    protected function assertAttributeIsSetTo($property, $value, $propertyName = null)
+    /**
+     * @param string $property
+     * @param $value
+     * @param string $propertyName
+     */
+    private function assertAttributeIsSetTo($property, $value, $propertyName = null)
     {
         $task = $this->getConfiguredTask(
             'testPropertySet' . ucfirst($property),
@@ -96,7 +120,7 @@ class ExecTaskTest extends AbstractBuildFileTest
             $task = $task->getRuntimeConfigurableWrapper()->getProxy();
         }
 
-        $rprop = new ReflectionProperty('ExecTask', $propertyName);
+        $rprop = new ReflectionProperty(ExecTask::class, $propertyName);
         $rprop->setAccessible(true);
         $this->assertEquals($value, $rprop->getValue($task));
     }

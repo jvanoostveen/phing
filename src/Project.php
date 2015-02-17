@@ -689,7 +689,7 @@ class Project
 
     /**
      * Returns the available targets
-     * @return array
+     * @return Target[]
      */
     public function getTargets()
     {

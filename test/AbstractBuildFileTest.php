@@ -5,7 +5,6 @@ namespace Phing\Test;
 use PHPUnit_Framework_TestCase;
 use Phing\Project;
 use Phing\Io\File;
-use AssertionFailureException;
 use Description;
 use Phing\Exception\BuildException;
 use Phing\Parser\ProjectConfigurator;
@@ -23,7 +22,6 @@ use Phing\Parser\ProjectConfigurator;
  */
 abstract class AbstractBuildFileTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @var Project
      */
@@ -103,8 +101,8 @@ abstract class AbstractBuildFileTest extends PHPUnit_Framework_TestCase
     /**
      *  run a target, expect for any build exception
      *
-     * @param  target target to run
-     * @param  cause  information string to reader of report
+     * @param $target target to run
+     * @param $cause  information string to reader of report
      */
     protected function expectBuildException($target, $cause)
     {
@@ -142,12 +140,11 @@ abstract class AbstractBuildFileTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *  execute the target, verify output matches expectations
+     * Execute the target, verify output matches expectations
      *
-     * @param  target  target to execute
-     * @param  output  output to look for
+     * @param string $target  target to execute
+     * @param string $output  output to look for
      */
-
     protected function expectOutput($target, $output)
     {
         $this->executeTarget($target);
@@ -156,13 +153,13 @@ abstract class AbstractBuildFileTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *  execute the target, verify output matches expectations
-     *  and that we got the named error at the end
-     * @param  target  target to execute
-     * @param  output  output to look for
-     * @param  error   Description of Parameter
+     * Execute the target, verify output matches expectations
+     * and that we got the named error at the end
+     *
+     * @param string $target  target to execute
+     * @param string $output  output to look for
+     * @param string $error   Description of Parameter
      */
-
     protected function expectOutputAndError($target, $output, $error)
     {
         $this->executeTarget($target);
@@ -187,6 +184,10 @@ abstract class AbstractBuildFileTest extends PHPUnit_Framework_TestCase
         return $this->buildException;
     }
 
+    /**
+     * @param string $buffer
+     * @return string
+     */
     private function cleanBuffer($buffer)
     {
         $cleanedBuffer = "";
@@ -213,10 +214,10 @@ abstract class AbstractBuildFileTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *  set up to run the named project
+     * Set up to run the named project.
      *
-     * @param  filename name of project file to run
-     * @throws \Phing\Exception\BuildException
+     * @param string $filename name of project file to run
+     * @throws BuildException
      */
     protected function configureProject($filename)
     {
