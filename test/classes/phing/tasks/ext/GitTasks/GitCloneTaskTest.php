@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -25,8 +23,9 @@ require_once '../classes/phing/tasks/ext/git/GitCloneTask.php';
 require_once dirname(__FILE__) . '/GitTestsHelper.php';
 
 /**
+ * @group git
+ *
  * @author Victor Farazdagi <simple.square@gmail.com>
- * @version $Id$
  * @package phing.tasks.ext
  */
 class GitCloneTaskTest extends AbstractBuildFileTest
